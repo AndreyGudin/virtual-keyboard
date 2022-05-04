@@ -13,6 +13,7 @@ const KEYBOARD_RU = [
   ['Ctrl', 'Win', 'Alt', 'WhiteSpace', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 const DIV_WRAPPER = document.createElement('div');
+const TEXT_AREA = document.createElement('textarea');
 class KeyboardButton {
   constructor(key, isCapslock, lang) {
     this.key = key;
@@ -38,6 +39,8 @@ class KeyboardButton {
 }
 
 DIV_WRAPPER.classList.add("virtual-keyboard");
+TEXT_AREA.classList.add("virtual-keyboard__text-area");
+document.body.append(TEXT_AREA);
 document.body.append(DIV_WRAPPER);
 
 KEYBOARD_EN.forEach((key) => {
