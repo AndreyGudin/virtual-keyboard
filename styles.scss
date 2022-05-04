@@ -1,0 +1,10 @@
+.virtual-keyboard{
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  gap: 15px;
+}
+.virtual-keyboard__keyboard-line{
+  display: flex;
+  justify-content: space-between;
+}
