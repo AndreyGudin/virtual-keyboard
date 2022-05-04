@@ -53,41 +53,41 @@ KEYBOARD_EN.forEach((key) => {
   }
 });
 
-let butt=document.createElement("button");
-butt.classList.add("but");
-butt.innerText = "EN";
-document.body.append(butt);
+let buttonLanguage=document.createElement("button");
+buttonLanguage.classList.add("but");
+buttonLanguage.innerText = "EN";
+document.body.append(buttonLanguage);
 
-butt.addEventListener("click",(event)=>{
+document.addEventListener("keydown",(event)=>{
   let lines=document.querySelectorAll(".virtual-keyboard__keyboard-line");
-  let buttt=document.querySelector(".but");
-  if (buttt.innerText === "EN"){
-    lines.forEach((elemOfLines,indexOfLines)=>{
-      let spans=elemOfLines.querySelectorAll(".virtual-keyboard__text-key");
-      spans.forEach((elemOfSpans,indexOfSpans)=>{
-        if (Array.isArray(KEYBOARD_RU[indexOfLines][indexOfSpans])){
-          elemOfSpans.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans][0];
-          elemOfSpans.nextSibling.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans][1];
-        } else{
-            elemOfSpans.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans];
-         }
-      })
-    });
-    console.log("RU");
-    buttt.innerText = "RU";
-}else if ((buttt.innerText === "RU")){
-    lines.forEach((elemOfLines,indexOfLines)=>{
-      let spans=elemOfLines.querySelectorAll(".virtual-keyboard__text-key");
-      spans.forEach((elemOfSpans,indexOfSpans)=>{
-        if (Array.isArray(KEYBOARD_RU[indexOfLines][indexOfSpans])){
-          elemOfSpans.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans][0];
-          elemOfSpans.nextSibling.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans][1];
-        } else{
-        elemOfSpans.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans];
-        }
-      })
-    });
-    buttt.innerText= "EN";
+  console.log(event);
+  if ((event.shiftKey)&&(event.altKey)){
+    if (buttonLanguage.innerText === "EN"){
+      lines.forEach((elemOfLines,indexOfLines)=>{
+        let spans=elemOfLines.querySelectorAll(".virtual-keyboard__text-key");
+        spans.forEach((elemOfSpans,indexOfSpans)=>{
+          if (Array.isArray(KEYBOARD_RU[indexOfLines][indexOfSpans])){
+            elemOfSpans.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans][0];
+            elemOfSpans.nextSibling.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans][1];
+          } else{
+              elemOfSpans.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans];
+          }
+        })
+      });
+      buttonLanguage.innerText = "RU";
+  }else if ((buttonLanguage.innerText === "RU")){
+      lines.forEach((elemOfLines,indexOfLines)=>{
+        let spans=elemOfLines.querySelectorAll(".virtual-keyboard__text-key");
+        spans.forEach((elemOfSpans,indexOfSpans)=>{
+          if (Array.isArray(KEYBOARD_RU[indexOfLines][indexOfSpans])){
+            elemOfSpans.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans][0];
+            elemOfSpans.nextSibling.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans][1];
+          } else{
+          elemOfSpans.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans];
+          }
+        })
+      });
+      buttonLanguage.innerText= "EN";
+    }
   }
-  
 });
