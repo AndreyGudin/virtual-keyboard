@@ -6,13 +6,13 @@ const KEYBOARD_EN = [
   ['Ctrl', 'Win', 'Alt', 'WhiteSpace', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 const KEYBOARD_RU = [
-  [['Ё',''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*`'], ['9', '(`'], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
-  ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', ['Х',''], ['Ъ',''], ['\\', '/'], 'Del'],
-  ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', ['Ж',''], ['Э',''], 'Enter'],
-  ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', ['Б',''], ['Ю',''], ['.', ','], 'ArrowUp', 'Shift'],
+  [['Ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*`'], ['9', '(`'], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
+  ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', ['Х', ''], ['Ъ', ''], ['\\', '/'], 'Del'],
+  ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', ['Ж', ''], ['Э', ''], 'Enter'],
+  ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', ['Б', ''], ['Ю', ''], ['.', ','], 'ArrowUp', 'Shift'],
   ['Ctrl', 'Win', 'Alt', 'WhiteSpace', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
-const DIV_WRAPPER = document.createElement('div');
+const VIRTUAL_KEYBOARD = document.createElement('div');
 const TEXT_AREA = document.createElement('textarea');
 class KeyboardButton {
   constructor(key, isCapslock, lang) {
@@ -28,7 +28,7 @@ class KeyboardButton {
     if (Array.isArray(this.key)) {
       template += `<button class="virtual-keyboard__key number-key"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
     } else if (this.key.length > 1) {
-      template += `<button class="virtual-keyboard__key control-key-${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
+      template += `<button class="virtual-keyboard__key control-key key-${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
     } else {
       template += `<button class="virtual-keyboard__key text-key key-${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
     }
@@ -38,15 +38,15 @@ class KeyboardButton {
   }
 }
 
-DIV_WRAPPER.classList.add("virtual-keyboard");
-TEXT_AREA.classList.add("virtual-keyboard__text-area");
+VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
+TEXT_AREA.classList.add('virtual-keyboard__text-area');
 document.body.append(TEXT_AREA);
-document.body.append(DIV_WRAPPER);
+document.body.append(VIRTUAL_KEYBOARD);
 
 KEYBOARD_EN.forEach((key) => {
   const divForKeyboardLine = document.createElement('div');
-  divForKeyboardLine.classList.add(`virtual-keyboard__keyboard-line`);
-  DIV_WRAPPER.append(divForKeyboardLine);
+  divForKeyboardLine.classList.add('virtual-keyboard__keyboard-line');
+  VIRTUAL_KEYBOARD.append(divForKeyboardLine);
   if (Array.isArray(key)) {
     key.forEach((elemInKey) => {
       divForKeyboardLine.append(new KeyboardButton(elemInKey).generate());
@@ -55,42 +55,49 @@ KEYBOARD_EN.forEach((key) => {
     divForKeyboardLine.append(new KeyboardButton(key).generate());
   }
 });
-
-let buttonLanguage=document.createElement("button");
-buttonLanguage.classList.add("but");
-buttonLanguage.innerText = "EN";
+VIRTUAL_KEYBOARD.addEventListener("click",(event)=>{
+  if (event.target.closest(".text-key")||event.target.closest(".number-key")){
+    event.target.closest(".text-key") ? 
+    TEXT_AREA.value+=event.target.closest(".text-key").innerText[0] :
+    TEXT_AREA.value+=event.target.closest(".number-key").innerText[0];
+  }
+});
+const buttonLanguage = document.createElement('button');
+buttonLanguage.classList.add('but');
+buttonLanguage.innerText = 'EN';
 document.body.append(buttonLanguage);
 
-document.addEventListener("keydown",(event)=>{
-  let lines=document.querySelectorAll(".virtual-keyboard__keyboard-line");
-  console.log(event);
-  if ((event.shiftKey)&&(event.altKey)){
-    if (buttonLanguage.innerText === "EN"){
-      lines.forEach((elemOfLines,indexOfLines)=>{
-        let spans=elemOfLines.querySelectorAll(".virtual-keyboard__text-key");
-        spans.forEach((elemOfSpans,indexOfSpans)=>{
-          if (Array.isArray(KEYBOARD_RU[indexOfLines][indexOfSpans])){
-            elemOfSpans.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans][0];
-            elemOfSpans.nextSibling.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans][1];
-          } else{
-              elemOfSpans.innerText = KEYBOARD_RU[indexOfLines][indexOfSpans];
+document.addEventListener('keydown', (event) => {
+  const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
+  if ((event.shiftKey) && (event.altKey)) {
+    if (buttonLanguage.innerText === 'EN') {
+      lines.forEach((eOfLines, iOfLines) => {
+        const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
+        spans.forEach((eOfSpans, iOfSpans) => {
+          const span = eOfSpans;
+          const index = iOfSpans;
+          if (Array.isArray(KEYBOARD_RU[iOfLines][index])) {
+            [span.innerText, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][index];
+          } else {
+            span.innerText = KEYBOARD_RU[iOfLines][index];
           }
-        })
+        });
       });
-      buttonLanguage.innerText = "RU";
-  }else if ((buttonLanguage.innerText === "RU")){
-      lines.forEach((elemOfLines,indexOfLines)=>{
-        let spans=elemOfLines.querySelectorAll(".virtual-keyboard__text-key");
-        spans.forEach((elemOfSpans,indexOfSpans)=>{
-          if (Array.isArray(KEYBOARD_RU[indexOfLines][indexOfSpans])){
-            elemOfSpans.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans][0];
-            elemOfSpans.nextSibling.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans][1];
-          } else{
-          elemOfSpans.innerText = KEYBOARD_EN[indexOfLines][indexOfSpans];
+      buttonLanguage.innerText = 'RU';
+    } else if ((buttonLanguage.innerText === 'RU')) {
+      lines.forEach((eOfLines, iOfLines) => {
+        const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
+        spans.forEach((eOfSpans, iOfSpans) => {
+          const span = eOfSpans;
+          const index = iOfSpans;
+          if (Array.isArray(KEYBOARD_RU[iOfLines][index])) {
+            [span.innerText, span.nextSibling.innerText] = KEYBOARD_EN[iOfLines][index];
+          } else {
+            span.innerText = KEYBOARD_EN[iOfLines][index];
           }
-        })
+        });
       });
-      buttonLanguage.innerText= "EN";
+      buttonLanguage.innerText = 'EN';
     }
   }
 });
