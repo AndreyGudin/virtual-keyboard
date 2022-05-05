@@ -56,7 +56,6 @@ function insertAtCursor(text, textarea) {
 
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
 TEXT_AREA.classList.add('virtual-keyboard__text-area');
-
 document.body.append(TEXT_AREA);
 document.body.append(VIRTUAL_KEYBOARD);
 
@@ -77,6 +76,8 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   const WHITE_SPACE = event.target.closest('.control-key.key-WhiteSpace');
   const ENTER = event.target.closest('.control-key.key-Enter');
   const BACK_SPACE = event.target.closest('.control-key.key-BACKSPACE');
+  const DELETE = event.target.closest('.control-key.key-Del');
+  const ARROW_UP = event.target.closest('.control-key.key-ArrowUp');
   const ARROW_LEFT = event.target.closest('.control-key.key-ArrowLeft');
   const ARROW_RIGHT = event.target.closest('.control-key.key-ArrowRight');
   const TAB = event.target.closest('.control-key.key-Tab');
@@ -123,6 +124,11 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   if (WHITE_SPACE) {
     insertAtCursor(' ', TEXT_AREA);
   }
+
+  if (ARROW_UP) {
+    console.log(TEXT_AREA.value.length);
+  }
+
   // нажатие стрелки влево
   if (ARROW_LEFT) {
     if (TEXT_AREA.value.length > 0) {
@@ -149,6 +155,17 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
         + TEXT_AREA.value.substring(START, TEXT_AREA.value.length);
       TEXT_AREA.selectionStart = START - 1;
       TEXT_AREA.selectionEnd = START - 1;
+    }
+  }
+  // нажатие на Del
+  if (DELETE){
+    const START = TEXT_AREA.selectionStart;
+    TEXT_AREA.focus();
+    if (START) {
+      TEXT_AREA.value = TEXT_AREA.value.substring(0, START)
+        + TEXT_AREA.value.substring(START+1, TEXT_AREA.value.length);
+      TEXT_AREA.selectionStart = START;
+      TEXT_AREA.selectionEnd = START;
     }
   }
 });
