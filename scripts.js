@@ -74,9 +74,15 @@ KEYBOARD_EN.forEach((key) => {
 });
 VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   const CAPSLOCK = event.target.closest('.control-key.key-CapsLock');
+  const WHITE_SPACE = event.target.closest('.control-key.key-WhiteSpace');
+  const ENTER = event.target.closest('.control-key.key-Enter');
+  const BACK_SPACE = event.target.closest('.control-key.key-BACKSPACE');
+  const ARROW_LEFT = event.target.closest('.control-key.key-ArrowLeft');
+  const ARROW_RIGHT = event.target.closest('.control-key.key-ArrowRight');
   const TAB = event.target.closest('.control-key.key-Tab');
   const TEXT_KEY = event.target.closest('.text-key');
   const NUMBER_KEY = event.target.closest('.number-key');
+
   // ввод текста и цифр
   if (TEXT_KEY || NUMBER_KEY) {
     if (TEXT_KEY) insertAtCursor(TEXT_KEY.innerText[0], TEXT_AREA);
@@ -111,6 +117,38 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
         });
       });
       CAPSLOCK.classList.toggle('active');
+    }
+  }
+  // нажатие пробела
+  if (WHITE_SPACE) {
+    insertAtCursor(' ', TEXT_AREA);
+  }
+  // нажатие стрелки влево
+  if (ARROW_LEFT) {
+    if (TEXT_AREA.value.length > 0) {
+      TEXT_AREA.focus();
+      TEXT_AREA.selectionStart -= 1;
+      TEXT_AREA.selectionEnd -= 1;
+    }
+  }
+  // нажатие стрелки вправо
+  if (ARROW_RIGHT) {
+    TEXT_AREA.focus();
+    TEXT_AREA.selectionStart += 1;
+  }
+  // нажатие Enter
+  if (ENTER) {
+    insertAtCursor('\n', TEXT_AREA);
+  }
+  // нажатие BackSpace
+  if (BACK_SPACE) {
+    const START = TEXT_AREA.selectionStart;
+    TEXT_AREA.focus();
+    if (START) {
+      TEXT_AREA.value = TEXT_AREA.value.substring(0, START - 1)
+        + TEXT_AREA.value.substring(START, TEXT_AREA.value.length);
+      TEXT_AREA.selectionStart = START - 1;
+      TEXT_AREA.selectionEnd = START - 1;
     }
   }
 });
