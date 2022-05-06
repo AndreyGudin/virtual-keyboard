@@ -149,7 +149,6 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
     TEXT_AREA.focus();
     if (START + widthRow) {
       TEXT_AREA.selectionStart += widthRow;
-      //TEXT_AREA.selectionEnd += widthRow;
     }
   }
 
@@ -196,7 +195,8 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
 VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
   const SHIFT = event.target.closest('.control-key.key-Shift');
   const CAPSLOCK = document.querySelector('.control-key.key-CapsLock');
-  const LANGUAGE = document.querySelector('.but');
+  const Q = document.querySelector('.text-key.key-q');
+  const isEnglish = Q.innerText.toLowerCase() === 'q';
   if (SHIFT) {
       const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
       if (!CAPSLOCK.classList.contains('active')) {
@@ -208,7 +208,7 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
               span.innerText = span.innerText.toUpperCase();
             }
             if (span.nextSibling){
-              if (LANGUAGE.innerText === "EN"){
+              if (isEnglish){
                 if (span.nextSibling.innerText){
                   span.innerText = '';
                   span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
@@ -237,7 +237,7 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
               span.innerText = span.innerText.toLowerCase();
             }
             if (span.nextSibling){
-              if (LANGUAGE.innerText === "EN"){
+              if (isEnglish){
                 if (span.nextSibling.innerText){
                   span.innerText = '';
                   span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
@@ -263,7 +263,8 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
 VIRTUAL_KEYBOARD.addEventListener('mouseup',(event)=>{
   const SHIFT = event.target.closest('.control-key.key-Shift');
   const CAPSLOCK = document.querySelector('.control-key.key-CapsLock');
-  const LANGUAGE = document.querySelector('.but');
+  const Q = document.querySelector('.text-key.key-q');
+  const isEnglish = Q.innerText.toLowerCase() === 'q';
   if (SHIFT) {
     const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
     if (!CAPSLOCK.classList.contains('active')) {
@@ -275,7 +276,7 @@ VIRTUAL_KEYBOARD.addEventListener('mouseup',(event)=>{
             span.innerText = span.innerText.toLowerCase();
           }
           if (span.nextSibling){
-            if (LANGUAGE.innerText === "EN"){
+            if (isEnglish){
               [span.innerText, span.nextSibling.innerText] = KEYBOARD_EN[iOfLines][iOfSpans];
             }else{
               [span.innerText, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][iOfSpans];
@@ -292,7 +293,7 @@ VIRTUAL_KEYBOARD.addEventListener('mouseup',(event)=>{
             span.innerText = span.innerText.toUpperCase();
           }
           if (span.nextSibling){
-            if (LANGUAGE.innerText === "EN"){
+            if (isEnglish){
               [span.innerText, span.nextSibling.innerText] = KEYBOARD_EN[iOfLines][iOfSpans];
             }else{
               [span.innerText, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][iOfSpans];
@@ -304,18 +305,16 @@ VIRTUAL_KEYBOARD.addEventListener('mouseup',(event)=>{
   }
 }
 });
-const buttonLanguage = document.createElement('button');
-buttonLanguage.classList.add('but');
-buttonLanguage.innerText = 'EN';
-document.body.append(buttonLanguage);
 
 document.addEventListener('keydown', (event) => {
   const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
   const CAPSLOCK = document.querySelector('.control-key.key-CapsLock');
   const isCapslockActive = CAPSLOCK.classList.contains('active');
+  const Q = document.querySelector('.text-key.key-q');
+  const isEnglish = Q.innerText.toLowerCase() === 'q';
   // нажатие shift+alt на клавиатуре
   if (event.shiftKey && event.altKey) {
-    if (buttonLanguage.innerText === 'EN') {
+    if (isEnglish) {
       lines.forEach((eOfLines, iOfLines) => {
         const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
         spans.forEach((eOfSpans, iOfSpans) => {
@@ -342,8 +341,7 @@ document.addEventListener('keydown', (event) => {
           }
         });
       });
-      buttonLanguage.innerText = 'RU';
-    } else if (buttonLanguage.innerText === 'RU') {
+    } else {
       lines.forEach((eOfLines, iOfLines) => {
         const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
         spans.forEach((eOfSpans, iOfSpans) => {
@@ -370,7 +368,6 @@ document.addEventListener('keydown', (event) => {
           }
         });
       });
-      buttonLanguage.innerText = 'EN';
     }
   }
 });
