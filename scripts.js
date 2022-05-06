@@ -1,12 +1,12 @@
 const KEYBOARD_EN = [
-  [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*`'], ['9', '(`'], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
+  [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
   ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', ['[', '{'], [']', '}'], ['\\', '|'], 'Del'],
   ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', [';', ':'], ["'", '"'], 'Enter'],
   ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', [',', '<'], ['.', '>'], ['/', '?'], 'ArrowUp', 'Shift'],
   ['Ctrl', 'Win', 'Alt', 'WhiteSpace', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 const KEYBOARD_RU = [
-  [['Ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*`'], ['9', '(`'], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
+  [['Ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
   ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', ['х', ''], ['ъ', ''], ['\\', '/'], 'Del'],
   ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', ['ж', ''], ['э', ''], 'Enter'],
   ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', ['б', ''], ['ю', ''], ['.', ','], 'ArrowUp', 'Shift'],
@@ -196,25 +196,44 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
 VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
   const SHIFT = event.target.closest('.control-key.key-Shift');
   const CAPSLOCK = document.querySelector('.control-key.key-CapsLock');
+  const LANGUAGE = document.querySelector('.but');
   if (SHIFT) {
       const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
       if (!CAPSLOCK.classList.contains('active')) {
-        lines.forEach((eOfLines) => {
+        lines.forEach((eOfLines,iOfLines) => {
           const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
-          spans.forEach((eOfSpans) => {
+          spans.forEach((eOfSpans,iOfSpans) => {
             const span = eOfSpans;
             if (span.innerText.length === 1) {
               span.innerText = span.innerText.toUpperCase();
             }
+            if (span.nextSibling){
+              if (LANGUAGE.innerText === "EN"){
+                span.innerText = '';
+                span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
+              }else{
+                span.innerText = '';
+                span.nextSibling.innerText = KEYBOARD_RU[iOfLines][iOfSpans][1];
+              }
+            }
           });
         });
       } else {
-        lines.forEach((eOfLines) => {
+        lines.forEach((eOfLines,iOfLines) => {
           const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
-          spans.forEach((eOfSpans) => {
+          spans.forEach((eOfSpans,iOfSpans) => {
             const span = eOfSpans;
             if (span.innerText.length === 1) {
               span.innerText = span.innerText.toLowerCase();
+            }
+            if (span.nextSibling){
+              if (LANGUAGE.innerText === "EN"){
+                span.innerText = '';
+                span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
+              }else{
+                span.innerText = '';
+                span.nextSibling.innerText = KEYBOARD_RU[iOfLines][iOfSpans][1];
+              }
             }
           });
         });
@@ -224,26 +243,40 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
 VIRTUAL_KEYBOARD.addEventListener('mouseup',(event)=>{
   const SHIFT = event.target.closest('.control-key.key-Shift');
   const CAPSLOCK = document.querySelector('.control-key.key-CapsLock');
-
+  const LANGUAGE = document.querySelector('.but');
   if (SHIFT) {
     const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
     if (!CAPSLOCK.classList.contains('active')) {
-      lines.forEach((eOfLines) => {
+      lines.forEach((eOfLines,iOfLines) => {
         const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
-        spans.forEach((eOfSpans) => {
+        spans.forEach((eOfSpans,iOfSpans) => {
           const span = eOfSpans;
           if (span.innerText.length === 1) {
             span.innerText = span.innerText.toLowerCase();
           }
+          if (span.nextSibling){
+            if (LANGUAGE.innerText === "EN"){
+              [span.innerText, span.nextSibling.innerText] = KEYBOARD_EN[iOfLines][iOfSpans];
+            }else{
+              [span.innerText, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][iOfSpans];
+            }
+          }
         });
       });
     } else {
-      lines.forEach((eOfLines) => {
+      lines.forEach((eOfLines,iOfLines) => {
         const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
-        spans.forEach((eOfSpans) => {
+        spans.forEach((eOfSpans,iOfSpans) => {
           const span = eOfSpans;
           if (span.innerText.length === 1) {
             span.innerText = span.innerText.toUpperCase();
+          }
+          if (span.nextSibling){
+            if (LANGUAGE.innerText === "EN"){
+              [span.innerText, span.nextSibling.innerText] = KEYBOARD_EN[iOfLines][iOfSpans];
+            }else{
+              [span.innerText, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][iOfSpans];
+            }
           }
         });
       });
