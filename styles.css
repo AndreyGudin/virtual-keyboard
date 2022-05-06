@@ -9,3 +9,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+.virtual-keyboard__key.active {
+  background-color: aliceblue;
+}
