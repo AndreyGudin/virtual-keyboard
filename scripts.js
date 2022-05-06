@@ -6,7 +6,7 @@ const KEYBOARD_EN = [
   ['Ctrl', 'Win', 'Alt', 'WhiteSpace', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
 ];
 const KEYBOARD_RU = [
-  [['Ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
+  [['ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
   ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', ['х', ''], ['ъ', ''], ['\\', '/'], 'Del'],
   ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', ['ж', ''], ['э', ''], 'Enter'],
   ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', ['б', ''], ['ю', ''], ['.', ','], 'ArrowUp', 'Shift'],
@@ -209,11 +209,21 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
             }
             if (span.nextSibling){
               if (LANGUAGE.innerText === "EN"){
-                span.innerText = '';
-                span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
+                if (span.nextSibling.innerText){
+                  span.innerText = '';
+                  span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
+
+                }
+                else {
+                  span.innerText = span.innerText.toUpperCase();
+                }
               }else{
-                span.innerText = '';
-                span.nextSibling.innerText = KEYBOARD_RU[iOfLines][iOfSpans][1];
+                if (span.nextSibling.innerText){
+                  span.innerText = '';
+                  span.nextSibling.innerText = KEYBOARD_RU[iOfLines][iOfSpans][1];
+                }else {
+                  span.innerText = span.innerText.toUpperCase();
+                }
               }
             }
           });
@@ -228,11 +238,21 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown',(event)=>{
             }
             if (span.nextSibling){
               if (LANGUAGE.innerText === "EN"){
-                span.innerText = '';
-                span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
-              }else{
-                span.innerText = '';
-                span.nextSibling.innerText = KEYBOARD_RU[iOfLines][iOfSpans][1];
+                if (span.nextSibling.innerText){
+                  span.innerText = '';
+                  span.nextSibling.innerText = KEYBOARD_EN[iOfLines][iOfSpans][1];
+
+                } else {
+                  span.innerText = span.innerText.toLowerCase();
+                }
+              } else {
+                if (span.nextSibling.innerText){
+                  span.innerText = '';
+                  span.nextSibling.innerText = KEYBOARD_RU[iOfLines][iOfSpans][1];
+
+                }else {
+                  span.innerText = span.innerText.toLowerCase();
+                }
               }
             }
           });
@@ -276,6 +296,7 @@ VIRTUAL_KEYBOARD.addEventListener('mouseup',(event)=>{
               [span.innerText, span.nextSibling.innerText] = KEYBOARD_EN[iOfLines][iOfSpans];
             }else{
               [span.innerText, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][iOfSpans];
+              span.innerText = span.innerText.toUpperCase();
             }
           }
         });
