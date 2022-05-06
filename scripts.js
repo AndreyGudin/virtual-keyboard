@@ -56,6 +56,8 @@ function insertAtCursor(text, textarea) {
 
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
 TEXT_AREA.classList.add('virtual-keyboard__text-area');
+TEXT_AREA.setAttribute('wrap','hard');
+TEXT_AREA.setAttribute('cols','30');
 document.body.append(TEXT_AREA);
 document.body.append(VIRTUAL_KEYBOARD);
 
@@ -78,6 +80,7 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   const BACK_SPACE = event.target.closest('.control-key.key-BACKSPACE');
   const DELETE = event.target.closest('.control-key.key-Del');
   const ARROW_UP = event.target.closest('.control-key.key-ArrowUp');
+  const ARROW_DOWN = event.target.closest('.control-key.key-ArrowDown');
   const ARROW_LEFT = event.target.closest('.control-key.key-ArrowLeft');
   const ARROW_RIGHT = event.target.closest('.control-key.key-ArrowRight');
   const TAB = event.target.closest('.control-key.key-Tab');
@@ -124,9 +127,32 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   if (WHITE_SPACE) {
     insertAtCursor(' ', TEXT_AREA);
   }
-
+  // нажатие стрелки Вверх
   if (ARROW_UP) {
-    console.log(TEXT_AREA.value.length);
+    const START = TEXT_AREA.selectionStart;
+    const widthRow = TEXT_AREA.cols + 2;
+    TEXT_AREA.focus();
+    console.log(START,TEXT_AREA.value.length);
+    if (START >= widthRow) {
+      if (START === TEXT_AREA.value.length){
+        TEXT_AREA.selectionStart -= widthRow + 1;
+        TEXT_AREA.selectionEnd -= widthRow + 1;
+      }else {
+
+      TEXT_AREA.selectionStart -= widthRow;
+      TEXT_AREA.selectionEnd -= widthRow;
+      }
+    }
+  }
+
+  if (ARROW_DOWN) {
+    const START = TEXT_AREA.selectionStart;
+    const widthRow = TEXT_AREA.cols + 2;
+    TEXT_AREA.focus();
+    if (START + widthRow) {
+      TEXT_AREA.selectionStart += widthRow;
+      //TEXT_AREA.selectionEnd += widthRow;
+    }
   }
 
   // нажатие стрелки влево
