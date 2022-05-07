@@ -143,6 +143,33 @@ function highlightButton(key, param = 'highlight') {
   }
 }
 
+function pressCapsLock(button){
+  const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
+    if (!button.classList.contains('active')) {
+      lines.forEach((eOfLines) => {
+        const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
+        spans.forEach((eOfSpans) => {
+          const span = eOfSpans;
+          if (span.innerText.length === 1) {
+            span.innerText = span.innerText.toUpperCase();
+          }
+        });
+      });
+      button.classList.toggle('active');
+    } else {
+      lines.forEach((eOfLines) => {
+        const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
+        spans.forEach((eOfSpans) => {
+          const span = eOfSpans;
+          if (span.innerText.length === 1) {
+            span.innerText = span.innerText.toLowerCase();
+          }
+        });
+      });
+      button.classList.toggle('active');
+    }
+}
+
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
 TEXT_AREA.classList.add('virtual-keyboard__text-area');
 TEXT_AREA.setAttribute('wrap','hard');
@@ -163,6 +190,7 @@ KEYBOARD_EN.forEach((key) => {
   }
 });
 VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
+  console.log(event.target.classList);
   const CAPSLOCK = event.target.closest('.control-key.CapsLock');
   const WHITE_SPACE = event.target.closest('.control-key.Space');
   const ENTER = event.target.closest('.control-key.Enter');
@@ -173,7 +201,9 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   const ARROW_LEFT = event.target.closest('.control-key.ArrowLeft');
   const ARROW_RIGHT = event.target.closest('.control-key.ArrowRight');
   const TAB = event.target.closest('.control-key.Tab');
-  const SHIFT = event.target.closest(".control-key.ShiftLeft");
+  const SHIFT_LEFT = event.target.closest(".control-key.ShiftLeft");
+  const SHIFT_RIGHT = event.target.closest(".control-key.ShiftRight");
+  let SHIFT;
   const Q = document.querySelector(".text-key.KeyQ");
   const isEnglish = Q.innerText.toLowerCase() === "q";
   const TEXT_KEY = event.target.closest('.text-key');
@@ -190,30 +220,7 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   }
   // нажатие CapsLock
   if (CAPSLOCK) {
-    const lines = document.querySelectorAll('.virtual-keyboard__keyboard-line');
-    if (!CAPSLOCK.classList.contains('active')) {
-      lines.forEach((eOfLines) => {
-        const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
-        spans.forEach((eOfSpans) => {
-          const span = eOfSpans;
-          if (span.innerText.length === 1) {
-            span.innerText = span.innerText.toUpperCase();
-          }
-        });
-      });
-      CAPSLOCK.classList.toggle('active');
-    } else {
-      lines.forEach((eOfLines) => {
-        const spans = eOfLines.querySelectorAll('.virtual-keyboard__text-key');
-        spans.forEach((eOfSpans) => {
-          const span = eOfSpans;
-          if (span.innerText.length === 1) {
-            span.innerText = span.innerText.toLowerCase();
-          }
-        });
-      });
-      CAPSLOCK.classList.toggle('active');
-    }
+    pressCapsLock(CAPSLOCK);
   }
   // нажатие пробела
   if (WHITE_SPACE) {
@@ -285,9 +292,10 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
     }
   }
 
+  if (SHIFT_LEFT) SHIFT = SHIFT_LEFT
+    else SHIFT = SHIFT_RIGHT;
   if (SHIFT) {
     const CAPSLOCK = document.querySelector('.control-key.CapsLock');
-    console.log(CAPSLOCK);
     const lines = document.querySelectorAll(".virtual-keyboard__keyboard-line");
     if (!SHIFT.classList.contains('active')){
       if (!CAPSLOCK.classList.contains("active")) {
@@ -392,6 +400,35 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
       }
   }
 });
+
+VIRTUAL_KEYBOARD.addEventListener('mousedown', (event) =>{
+  let BUTTON;
+  if (event.target.closest(".virtual-keyboard__key")) {
+    BUTTON = event.target.closest(".virtual-keyboard__key");
+    if (
+      !(BUTTON.classList[2] === "ShiftLeft") &&
+      !(BUTTON.classList[2] === "ShiftRight") &&
+      !(BUTTON.classList[2] === "CapsLock")
+    ) {
+      console.log(BUTTON.classList[2]);
+      highlightButton(BUTTON.classList[2]);
+    }
+  }
+})
+
+VIRTUAL_KEYBOARD.addEventListener('mouseup', (event) =>{
+  let BUTTON;
+  if (event.target.closest('.virtual-keyboard__key')) {
+    BUTTON = event.target.closest(".virtual-keyboard__key");
+    if (
+      !(BUTTON.classList[2] === "ShiftLeft") &&
+      !(BUTTON.classList[2] === "ShiftRight") &&
+      !(BUTTON.classList[2] === "CapsLock")
+    ) {
+      highlightButton(BUTTON.classList[2],'uncheck');
+    }
+  }
+})
 
 document.addEventListener("keydown", (event) => {
   const lines = document.querySelectorAll(".virtual-keyboard__keyboard-line");
