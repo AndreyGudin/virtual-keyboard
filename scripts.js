@@ -99,24 +99,48 @@ function insertAtCursor(text, textarea) {
   }
 }
 
-function highlightButton(key) {
+function highlightButton(key, param = 'highlight') {
   let buttonLighted;
   if ((key === 'ControlLeft')||(key === 'ControlRight')){
     buttonLighted = document.querySelector(`.virtual-keyboard__key.Ctrl${key.substring(7)}`);
-    buttonLighted.classList.toggle('active');
+    if (!buttonLighted.classList.contains('active')){
+      buttonLighted.classList.add('active');
+    } else{
+      if (param === 'uncheck'){
+        buttonLighted.classList.remove('active');
+      }
+    }
   } else if (key === 'Delete'){
     buttonLighted = document.querySelector(`.virtual-keyboard__key.Del`);
-    buttonLighted.classList.toggle('active');
+    if (!buttonLighted.classList.contains('active')){
+      buttonLighted.classList.add('active');
+    }else{
+      if (param === 'uncheck'){
+        buttonLighted.classList.remove('active');
+      }
+    }
   } else if ((key === 'MetaLeft')||(key === 'MetaRight')){
     buttonLighted = document.querySelector(`.virtual-keyboard__key.WinLeft`);
-    buttonLighted.classList.toggle('active');
-  }
+    if (!buttonLighted.classList.contains('active')){
+      buttonLighted.classList.add('active');
+    }else{
+      if (param === 'uncheck'){
+        buttonLighted.classList.remove('active');
+      }
+    }
+   }
   else{
       if (document.querySelector(`.virtual-keyboard__key.${key}`)){
         buttonLighted = document.querySelector(`.virtual-keyboard__key.${key}`);
-        buttonLighted.classList.toggle('active');
+        if (!buttonLighted.classList.contains('active')){
+          buttonLighted.classList.add('active');
+        }else{
+          if (param === 'uncheck'){
+            buttonLighted.classList.remove('active');
+          }
+        }
+     }
   }
-}
 }
 
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
@@ -448,5 +472,5 @@ document.addEventListener("keydown", (event) => {
 
 });
 document.addEventListener("keyup", (event) => {
-  highlightButton(event.code);
+  highlightButton(event.code,'uncheck');
 })
