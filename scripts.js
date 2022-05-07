@@ -67,9 +67,19 @@ class KeyboardButton {
         } else {
           template += `<button class="virtual-keyboard__key control-key ${this.key}Left"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
         }
-      } else {
+      } else if (this.key ==='ArrowLeft'){
+        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">\&#8678;</span></button>`;
+      } else if (this.key ==='ArrowUp'){
+        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">&#8679;</span></button>`;
+      } else if (this.key ==='ArrowRight'){
+        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">&#8680;</span></button>`;
+      } else if (this.key ==='ArrowDown'){
+        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">&#8681;</span></button>`;
+      }
+      else {
         template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
       }
+
     } else {
       template += `<button class="virtual-keyboard__key text-key Key${this.key.toUpperCase()}"><span class="virtual-keyboard__text-key">${
         this.key
