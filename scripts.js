@@ -16,7 +16,7 @@ const VIRTUAL_KEYBOARD = document.createElement('div');
 const TEXT_AREA = document.createElement('textarea');
 
 class KeyboardButton {
-  constructor(key, isCapslock, lang) {
+  constructor(key, lang) {
     this.key = key;
     this.lang = lang;
   }
@@ -26,7 +26,33 @@ class KeyboardButton {
     const buttonGen = document.createElement('div');
     buttonGen.classList.add('virtual-keyboard__button-wrapper');
     if (Array.isArray(this.key)) {
-      template += `<button class="virtual-keyboard__key number-key"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      if (this.key[0] === '`'){
+        template += `<button class="virtual-keyboard__key text-key key-Backquote"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === '['){
+          template += `<button class="virtual-keyboard__key text-key key-BracketLeft"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === ']'){
+          template += `<button class="virtual-keyboard__key text-key key-BracketRight"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === ';'){
+          template += `<button class="virtual-keyboard__key text-key key-Semicolon"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === "'"){
+          template += `<button class="virtual-keyboard__key text-key key-Quote"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === '\\'){
+          template += `<button class="virtual-keyboard__key text-key key-Backslash"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === ','){
+          template += `<button class="virtual-keyboard__key text-key key-Comma"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === '.'){
+          template += `<button class="virtual-keyboard__key text-key key-Period"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else if (this.key[0] === '/'){
+          template += `<button class="virtual-keyboard__key text-key key-Slash"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+      } else {
+        if (this.key[0] === '-'){
+          template += `<button class="virtual-keyboard__key number-key key-Minus"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        } else if (this.key[0] === '='){
+            template += `<button class="virtual-keyboard__key number-key key-Equal"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+          } else {
+            template += `<button class="virtual-keyboard__key number-key key-${this.key[0]}"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+          }
+      }
     } else if (this.key.length > 1) {
       template += `<button class="virtual-keyboard__key control-key key-${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
     } else {
@@ -52,6 +78,19 @@ function insertAtCursor(text, textarea) {
   } else {
     target.value += text;
   }
+}
+
+function pressButton(key) {
+  let buttonLighted = '';
+  if (key.substring(0,3) === 'Key'){
+    buttonLighted = document.querySelector(`.virtual-keyboard__key.text-key.key-${key[3].toLowerCase()}`);
+    buttonLighted.classList.toggle('active');
+  }
+  if (key.substring(0,3) === 'Dig'){
+    buttonLighted = document.querySelector(`.virtual-keyboard__key.text-key.key-${key[3].toLowerCase()}`);
+    buttonLighted.classList.toggle('active');
+  }
+
 }
 
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
@@ -379,4 +418,9 @@ document.addEventListener("keydown", (event) => {
     }
   }
 
+  pressButton(event.code);
+
 });
+document.addEventListener("keyup", (event) => {
+  pressButton(event.code);
+})
