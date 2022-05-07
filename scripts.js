@@ -488,7 +488,8 @@ document.addEventListener('keydown', (event) => {
   if (event.code === 'CapsLock') {
     pressCapsLock(document.querySelector(`.control-key.${event.code}`));
   }
-  if (!event.code === 'CapsLock'){
+  if (!(event.code === 'CapsLock')){
+    console.log(event.code);
     highlightButton(event.code);
   }
 });
@@ -498,20 +499,20 @@ document.addEventListener('keyup', (event) => {
   if ((event.code === "ShiftLeft")||(event.code === "ShiftRight")){
     pressShift(document.querySelector(`.control-key.${event.code}`));
   }
-  if (!event.code === 'CapsLock'){
+  if (!(event.code === 'CapsLock')){
     highlightButton(event.code,'uncheck');
   }
 });
 
-document.addEventListener('keyup', (event) => {
-  const SHIFT_LEFT = document.querySelector('.control-key.ShiftLeft');
-  const SHIFT_RIGHT = document.querySelector('.control-key.ShiftRight');
-  if (SHIFT_LEFT.classList.contains('active')){
-    console.log(SHIFT_LEFT);
-    SHIFT_LEFT.classList.remove('active');
-  }
-  if (SHIFT_RIGHT.classList.contains('active')){
-    console.log(event.code);
-    SHIFT_RIGHT.classList.remove('active');
-  }
-})
+// document.addEventListener('keyup', (event) => {
+//   const SHIFT_LEFT = document.querySelector('.control-key.ShiftLeft');
+//   const SHIFT_RIGHT = document.querySelector('.control-key.ShiftRight');
+//   if (SHIFT_LEFT.classList.contains('active')){
+//     console.log(SHIFT_LEFT);
+//     SHIFT_LEFT.classList.remove('active');
+//   }
+//   if (SHIFT_RIGHT.classList.contains('active')){
+//     console.log(event.code);
+//     SHIFT_RIGHT.classList.remove('active');
+//   }
+// })
