@@ -199,7 +199,9 @@ function pressShift(button) {
   const Q = document.querySelector(".text-key.KeyQ");
   const isEnglish = Q.innerText.toLowerCase() === "q";
   const lines = document.querySelectorAll(".virtual-keyboard__keyboard-line");
-  if (!button.classList.contains("active")) {
+  const SHIFT_LEFT = document.querySelector(".control-key.ShiftLeft");
+  const SHIFT_RIGHT = document.querySelector(".control-key.ShiftRight");
+  if ((!button.classList.contains("active"))&&(!SHIFT_LEFT.classList.contains("active"))&&(!SHIFT_RIGHT.classList.contains("active"))) {
     if (!CAPSLOCK.classList.contains("active")) {
       lines.forEach((eOfLines, iOfLines) => {
         const spans = eOfLines.querySelectorAll(".virtual-keyboard__text-key");
@@ -253,7 +255,7 @@ function pressShift(button) {
         });
       });
     }
-    button.classList.toggle("active");
+    button.classList.add("active");
   } else {
     if (!CAPSLOCK.classList.contains("active")) {
       lines.forEach((eOfLines, iOfLines) => {
@@ -295,7 +297,20 @@ function pressShift(button) {
         });
       });
     }
-    button.classList.toggle("active");
+    button.classList.remove("active");
+    if (SHIFT_LEFT.classList.contains("active")){
+      SHIFT_LEFT.classList.remove("active");
+    }
+    if (SHIFT_LEFT.classList.contains("active")){
+      SHIFT_LEFT.classList.remove("active");
+    }
+    if (SHIFT_LEFT.classList.contains("highlight")){
+      SHIFT_LEFT.classList.remove("highlight");
+    }
+    if (SHIFT_RIGHT.classList.contains("highlight")){
+      console.log('right');
+      SHIFT_RIGHT.classList.remove("highlight");
+    }
   }
 }
 
@@ -399,26 +414,35 @@ VIRTUAL_KEYBOARD.addEventListener("click", (event) => {
   }
   // нажатие BackSpace
   if (BACK_SPACE) {
+    console.log(TEXT_AREA.selectionStart,TEXT_AREA.selectionEnd);
     const START = TEXT_AREA.selectionStart;
+    const END = TEXT_AREA.selectionEnd;
     TEXT_AREA.focus();
-    if (START) {
+    if ((START)&&(START === END)) {
       TEXT_AREA.value =
         TEXT_AREA.value.substring(0, START - 1) +
         TEXT_AREA.value.substring(START, TEXT_AREA.value.length);
       TEXT_AREA.selectionStart = START - 1;
       TEXT_AREA.selectionEnd = START - 1;
+    }else if (END > START){
+      TEXT_AREA.value = TEXT_AREA.value.substring(0, START - 1) + 
+      TEXT_AREA.value.substring(END, TEXT_AREA.value.length);
     }
   }
   // нажатие на Del
   if (DELETE) {
     const START = TEXT_AREA.selectionStart;
+    const END = TEXT_AREA.selectionEnd;
     TEXT_AREA.focus();
-    if (START) {
+    if ((START)&&(START === END)) {
       TEXT_AREA.value =
         TEXT_AREA.value.substring(0, START) +
         TEXT_AREA.value.substring(START + 1, TEXT_AREA.value.length);
       TEXT_AREA.selectionStart = START;
       TEXT_AREA.selectionEnd = START;
+    }else if (END > START){
+      TEXT_AREA.value = TEXT_AREA.value.substring(0, START - 1) + 
+      TEXT_AREA.value.substring(END, TEXT_AREA.value.length);
     }
   }
 
@@ -470,6 +494,7 @@ document.addEventListener("keydown", (event) => {
   const isCapslockActive = CAPSLOCK.classList.contains("active");
   const Q = document.querySelector(".text-key.KeyQ");
   const isEnglish = Q.innerText.toLowerCase() === "q";
+  TEXT_AREA.focus();
   // нажатие shift+alt на клавиатуре
   if (event.shiftKey && event.altKey) {
     if (isEnglish) {
@@ -548,30 +573,18 @@ document.addEventListener("keydown", (event) => {
     insertAtCursor("        ", TEXT_AREA);
   }
   if (!(event.code === "CapsLock")) {
-    console.log(event.code);
     highlightButton(event.code);
   }
 });
 
 document.addEventListener("keyup", (event) => {
   isShiftPressed = true;
+  
   if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
     pressShift(document.querySelector(`.control-key.${event.code}`));
   }
-  if (!(event.code === "CapsLock")) {
+  if (!(event.code === "CapsLock")&&!(event.code === "ShiftLeft")&&!(event.code === "ShiftRight")) {
     highlightButton(event.code, "uncheck");
   }
 });
 
-// document.addEventListener('keyup', (event) => {
-//   const SHIFT_LEFT = document.querySelector('.control-key.ShiftLeft');
-//   const SHIFT_RIGHT = document.querySelector('.control-key.ShiftRight');
-//   if (SHIFT_LEFT.classList.contains('active')){
-//     console.log(SHIFT_LEFT);
-//     SHIFT_LEFT.classList.remove('active');
-//   }
-//   if (SHIFT_RIGHT.classList.contains('active')){
-//     console.log(event.code);
-//     SHIFT_RIGHT.classList.remove('active');
-//   }
-// })
