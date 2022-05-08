@@ -14,17 +14,28 @@ body {
   flex-direction: column;
   width: 950px;
   gap: 15px;
+
 }
 .virtual-keyboard__keyboard-line {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
+
+  &.shift >.virtual-keyboard__button-wrapper>.virtual-keyboard__key>.virtual-keyboard__symbol-key{
+    display: block;
+    transform: translate(-10px,10px);
+    transition: all 0.3s ease 0s;
+  }
 }
 
 .virtual-keyboard__key,
 .virtual-keyboard__text-area {
   font-family: "Josefin Sans", sans-serif;
   font-size: 16px;
+}
+.virtual-keyboard__key{
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .virtual-keyboard__key.control-key {
@@ -56,6 +67,18 @@ body {
   width: 75px;
 }
 
+.virtual-keyboard__key.text-key{
+  background-color: #f44f4f;
+}
+
+.virtual-keyboard__key.number-key{
+  background-color: #a4bf16;
+}
+
+.virtual-keyboard__key.control-key{
+  background-color: #476ad8;
+}
+
 .virtual-keyboard__key.text-key,
 .virtual-keyboard__key.number-key,
 .virtual-keyboard__key.control-key.ArrowLeft,
@@ -67,5 +90,18 @@ body {
   border-radius: 5px;
 }
 .virtual-keyboard__key.highlight {
+  transition: all 0.1s ease 0s;
+  background-color: bisque;
+  transform: scale(0.9);
+}
+.virtual-keyboard__key.active {
   background-color: bisque;
 }
+
+.virtual-keyboard__symbol-key{
+  position: relative;
+  top: -10px;
+  left: 10px;
+}
+
+

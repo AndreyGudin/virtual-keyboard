@@ -27,29 +27,29 @@ class KeyboardButton {
     buttonGen.classList.add("virtual-keyboard__button-wrapper");
     if (Array.isArray(this.key)) {
       if (this.key[0] === "`") {
-        template += `<button class="virtual-keyboard__key text-key Backquote"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Backquote"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "[") {
-        template += `<button class="virtual-keyboard__key text-key BracketLeft"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key BracketLeft"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "]") {
-        template += `<button class="virtual-keyboard__key text-key BracketRight"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key BracketRight"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === ";") {
-        template += `<button class="virtual-keyboard__key text-key Semicolon"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Semicolon"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "'") {
-        template += `<button class="virtual-keyboard__key text-key Quote"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Quote"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "\\") {
-        template += `<button class="virtual-keyboard__key text-key Backslash"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Backslash"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === ",") {
-        template += `<button class="virtual-keyboard__key text-key Comma"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Comma"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === ".") {
-        template += `<button class="virtual-keyboard__key text-key Period"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Period"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "/") {
-        template += `<button class="virtual-keyboard__key text-key Slash"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key text-key Slash"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "-") {
-        template += `<button class="virtual-keyboard__key number-key Minus"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key number-key Minus"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else if (this.key[0] === "=") {
-        template += `<button class="virtual-keyboard__key number-key Equal"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key number-key Equal"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       } else {
-        template += `<button class="virtual-keyboard__key number-key Digit${this.key[0]}"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span>${this.key[1]}</span></button>`;
+        template += `<button class="virtual-keyboard__key number-key Digit${this.key[0]}"><span class="virtual-keyboard__text-key">${this.key[0]}</span><span class="virtual-keyboard__symbol-key">${this.key[1]}</span></button>`;
       }
     } else if (this.key.length > 1) {
       if (
@@ -67,7 +67,13 @@ class KeyboardButton {
         } else {
           template += `<button class="virtual-keyboard__key control-key ${this.key}Left"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
         }
-      } else if (this.key ==='⇦'){
+      } 
+      else {
+        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
+      }
+
+    } else {
+      if (this.key ==='⇦'){
         template += `<button class="virtual-keyboard__key control-key ArrowLeft"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
       } else if (this.key ==='⇧'){
         template += `<button class="virtual-keyboard__key control-key ArrowUp"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
@@ -75,15 +81,11 @@ class KeyboardButton {
         template += `<button class="virtual-keyboard__key control-key ArrowRight"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
       } else if (this.key ==='⇩'){
         template += `<button class="virtual-keyboard__key control-key ArrowDown"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
-      }
-      else {
-        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
-      }
-
-    } else {
-      template += `<button class="virtual-keyboard__key text-key Key${this.key.toUpperCase()}"><span class="virtual-keyboard__text-key">${
-        this.key
-      }</span></button>`;
+      } else {
+        template += `<button class="virtual-keyboard__key text-key Key${this.key.toUpperCase()}"><span class="virtual-keyboard__text-key">${
+          this.key
+        }</span></button>`;
+    }
     }
 
     buttonGen.innerHTML = template;
@@ -175,21 +177,18 @@ function pressCapsLock(button) {
     if (PressedShift){
       changeToLowerCase()
       button.classList.add("active");
-      button.classList.add("highlight");
     } else {
       changeToUpperCase();
       button.classList.add("active");
-      button.classList.add("highlight");
+
     }
   } else {
     if (PressedShift){
       changeToUpperCase();
       button.classList.remove("active");
-      button.classList.remove("highlight");
     }else{
       changeToLowerCase()
       button.classList.remove("active");
-      button.classList.remove("highlight");
   }
   }
 }
@@ -201,7 +200,11 @@ function pressShift(button) {
   const lines = document.querySelectorAll(".virtual-keyboard__keyboard-line");
   const SHIFT_LEFT = document.querySelector(".control-key.ShiftLeft");
   const SHIFT_RIGHT = document.querySelector(".control-key.ShiftRight");
-  if ((!button.classList.contains("active"))&&(!SHIFT_LEFT.classList.contains("active"))&&(!SHIFT_RIGHT.classList.contains("active"))) {
+  if (
+    !button.classList.contains("active") &&
+    !SHIFT_LEFT.classList.contains("active") &&
+    !SHIFT_RIGHT.classList.contains("active")
+  ) {
     if (!CAPSLOCK.classList.contains("active")) {
       lines.forEach((eOfLines, iOfLines) => {
         const spans = eOfLines.querySelectorAll(".virtual-keyboard__text-key");
@@ -226,6 +229,7 @@ function pressShift(button) {
               span.innerText = span.innerText.toUpperCase();
             }
           }
+          eOfLines.classList.add("shift");
         });
       });
     } else {
@@ -253,10 +257,10 @@ function pressShift(button) {
             }
           }
         });
+        eOfLines.classList.add("shift");
       });
     }
     button.classList.add("active");
-    button.classList.add("highlight");
   } else {
     if (!CAPSLOCK.classList.contains("active")) {
       lines.forEach((eOfLines, iOfLines) => {
@@ -276,6 +280,7 @@ function pressShift(button) {
             }
           }
         });
+        eOfLines.classList.remove("shift");
       });
     } else {
       lines.forEach((eOfLines, iOfLines) => {
@@ -296,21 +301,16 @@ function pressShift(button) {
             }
           }
         });
+        eOfLines.classList.remove("shift");
       });
     }
     button.classList.remove("active");
-    if (SHIFT_LEFT.classList.contains("active")){
+
+    if (SHIFT_LEFT.classList.contains("active")) {
       SHIFT_LEFT.classList.remove("active");
     }
-    if (SHIFT_LEFT.classList.contains("active")){
+    if (SHIFT_LEFT.classList.contains("active")) {
       SHIFT_LEFT.classList.remove("active");
-    }
-    if (SHIFT_LEFT.classList.contains("highlight")){
-      SHIFT_LEFT.classList.remove("highlight");
-    }
-    if (SHIFT_RIGHT.classList.contains("highlight")){
-      console.log('right');
-      SHIFT_RIGHT.classList.remove("highlight");
     }
   }
 }
@@ -477,7 +477,7 @@ VIRTUAL_KEYBOARD.addEventListener("mouseup", (event) => {
     }
   }
 });
-
+let isShiftAltPressed = true;
 let isShiftPressed = true;
 
 document.addEventListener("keydown", (event) => {
@@ -488,71 +488,82 @@ document.addEventListener("keydown", (event) => {
   const isEnglish = Q.innerText.toLowerCase() === "q";
   TEXT_AREA.focus();
   // нажатие shift+alt на клавиатуре
+  console.log(event.altKey);
   if (event.shiftKey && event.altKey) {
-    if (isEnglish) {
-      lines.forEach((eOfLines, iOfLines) => {
-        const spans = eOfLines.querySelectorAll(".virtual-keyboard__text-key");
-        spans.forEach((eOfSpans, iOfSpans) => {
-          const span = eOfSpans;
-          const index = iOfSpans;
-          if (Array.isArray(KEYBOARD_RU[iOfLines][index])) {
-            [span.innerText, span.nextSibling.innerText] =
-              KEYBOARD_RU[iOfLines][index];
-            if (span.innerText.length === 1) {
-              if (isCapslockActive) {
-                span.innerText = span.innerText.toUpperCase();
-                span.nextSibling.innerText =
-                  span.nextSibling.innerText.toUpperCase();
-              } else {
-                span.innerText = span.innerText.toLowerCase();
-                span.nextSibling.innerText =
-                  span.nextSibling.innerText.toLowerCase();
+    if (isShiftAltPressed){
+      isShiftAltPressed = false;
+      if (isEnglish) {
+        lines.forEach((eOfLines, iOfLines) => {
+          const spans = eOfLines.querySelectorAll(".virtual-keyboard__text-key");
+          spans.forEach((eOfSpans, iOfSpans) => {
+            const span = eOfSpans;
+            const index = iOfSpans;
+            if (Array.isArray(KEYBOARD_RU[iOfLines][index])) {
+              if (KEYBOARD_RU[iOfLines][index][1]){
+                [span.innerText, span.nextSibling.innerText] =
+                  KEYBOARD_RU[iOfLines][index];
+              } else{
+                [span.nextSibling.innerText,] = KEYBOARD_RU[iOfLines][index];
+              }
+              if (span.innerText.length === 1) {
+                if (isCapslockActive) {
+                  span.innerText = "";
+                  span.nextSibling.innerText =
+                    span.nextSibling.innerText.toUpperCase();
+                } else {
+                  span.innerText = "";
+                  span.nextSibling.innerText =
+                    span.nextSibling.innerText.toLowerCase();
+                }
+              }
+            } else {
+              span.innerText = KEYBOARD_RU[iOfLines][index];
+              if (span.innerText.length === 1) {
+                if (isCapslockActive) {
+                  span.innerText = span.innerText.toUpperCase();
+                } else span.innerText = span.innerText.toLowerCase();
               }
             }
-          } else {
-            span.innerText = KEYBOARD_RU[iOfLines][index];
-            if (span.innerText.length === 1) {
-              if (isCapslockActive) {
-                span.innerText = span.innerText.toUpperCase();
-              } else span.innerText = span.innerText.toLowerCase();
-            }
-          }
+          });
         });
-      });
-    } else {
-      lines.forEach((eOfLines, iOfLines) => {
-        const spans = eOfLines.querySelectorAll(".virtual-keyboard__text-key");
-        spans.forEach((eOfSpans, iOfSpans) => {
-          const span = eOfSpans;
-          const index = iOfSpans;
-          if (Array.isArray(KEYBOARD_EN[iOfLines][index])) {
-            [span.innerText, span.nextSibling.innerText] =
-              KEYBOARD_EN[iOfLines][index];
-            if (span.innerText.length === 1) {
-              if (isCapslockActive) {
-                span.innerText = span.innerText.toUpperCase();
-                span.nextSibling.innerText =
-                  span.nextSibling.innerText.toUpperCase();
-              } else {
-                span.innerText = span.innerText.toLowerCase();
-                span.nextSibling.innerText =
-                  span.nextSibling.innerText.toLowerCase();
+      } else {
+        lines.forEach((eOfLines, iOfLines) => {
+          const spans = eOfLines.querySelectorAll(".virtual-keyboard__text-key");
+          spans.forEach((eOfSpans, iOfSpans) => {
+            const span = eOfSpans;
+            const index = iOfSpans;
+            if (Array.isArray(KEYBOARD_EN[iOfLines][index])) {
+              [span.innerText, span.nextSibling.innerText] =
+                KEYBOARD_EN[iOfLines][index];
+              if (span.innerText.length === 1) {
+                if (isCapslockActive) {
+                  span.innerText = "";
+                  span.nextSibling.innerText =
+                    span.nextSibling.innerText.toUpperCase();
+                } else {
+                  span.innerText = "";
+                  span.nextSibling.innerText =
+                    span.nextSibling.innerText.toLowerCase();
+                }
+              }
+            } else {
+              span.innerText = KEYBOARD_EN[iOfLines][index];
+              if (span.innerText.length === 1) {
+                if (isCapslockActive) {
+                  span.innerText = span.innerText.toUpperCase();
+                } else span.innerText = span.innerText.toLowerCase();
               }
             }
-          } else {
-            span.innerText = KEYBOARD_EN[iOfLines][index];
-            if (span.innerText.length === 1) {
-              if (isCapslockActive) {
-                span.innerText = span.innerText.toUpperCase();
-              } else span.innerText = span.innerText.toLowerCase();
-            }
-          }
+          });
         });
-      });
+      }
     }
+  }else{
+    isShiftAltPressed = true;
   }
-  if (event.shiftKey) {
+  if (event.shiftKey ) {
     if (isShiftPressed) {
+
       isShiftPressed = false;
       pressShift(document.querySelector(`.control-key.${event.code}`));
     }
@@ -564,16 +575,20 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     insertAtCursor("        ", TEXT_AREA);
   }
-  if (!(event.code === "CapsLock")) {
+  if (!(event.code === "CapsLock")&&!(event.code === "ShiftLeft")&&!(event.code === "ShiftRight")) {
     highlightButton(event.code);
   }
 });
 
 document.addEventListener("keyup", (event) => {
-  isShiftPressed = true;
-  
+
+
   if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+    isShiftPressed = true;
     pressShift(document.querySelector(`.control-key.${event.code}`));
+  }
+  if (event.code === "AltLeft" || event.code === "AltRight"){
+    isShiftAltPressed = true;
   }
   if (!(event.code === "CapsLock")&&!(event.code === "ShiftLeft")&&!(event.code === "ShiftRight")) {
     highlightButton(event.code, "uncheck");
