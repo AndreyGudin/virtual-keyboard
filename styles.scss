@@ -13,8 +13,13 @@ body {
   display: flex;
   flex-direction: column;
   width: 950px;
-  gap: 15px;
-
+  gap: 5px;
+  border: 5px solid black;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px 5px;
+  border-radius: 10px;
+  background-color: cadetblue;
 }
 .virtual-keyboard__keyboard-line {
   display: flex;
@@ -36,6 +41,7 @@ body {
 .virtual-keyboard__key{
   cursor: pointer;
   border-radius: 5px;
+  box-shadow: 0px 3px 3px 3px rgba(34, 60, 80, 0.7) inset;
 }
 
 .virtual-keyboard__key.control-key {
@@ -93,6 +99,7 @@ body {
   transition: all 0.1s ease 0s;
   background-color: bisque;
   transform: scale(0.9);
+
 }
 .virtual-keyboard__key.active {
   background-color: bisque;
