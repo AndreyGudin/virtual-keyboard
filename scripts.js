@@ -2,15 +2,15 @@ const KEYBOARD_EN = [
   [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
   ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', ['[', '{'], [']', '}'], ['\\', '|'], 'Del'],
   ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', [';', ':'], ["'", '"'], 'Enter'],
-  ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', [',', '<'], ['.', '>'], ['/', '?'], 'ArrowUp', 'Shift'],
-  ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
+  ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', [',', '<'], ['.', '>'], ['/', '?'], '⇧', 'Shift'],
+  ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', '⇦', '⇩', '⇨'],
 ];
 const KEYBOARD_RU = [
   [['ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
   ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', ['х', ''], ['ъ', ''], ['\\', '/'], 'Del'],
   ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', ['ж', ''], ['э', ''], 'Enter'],
-  ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', ['б', ''], ['ю', ''], ['.', ','], 'ArrowUp', 'Shift'],
-  ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
+  ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', ['б', ''], ['ю', ''], ['.', ','], '⇧', 'Shift'],
+  ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', '⇦', '⇩', '⇨'],
 ];
 const VIRTUAL_KEYBOARD = document.createElement("div");
 const TEXT_AREA = document.createElement("textarea");
@@ -67,14 +67,14 @@ class KeyboardButton {
         } else {
           template += `<button class="virtual-keyboard__key control-key ${this.key}Left"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
         }
-      } else if (this.key ==='ArrowLeft'){
-        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">\&#8678;</span></button>`;
-      } else if (this.key ==='ArrowUp'){
-        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">&#8679;</span></button>`;
-      } else if (this.key ==='ArrowRight'){
-        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">&#8680;</span></button>`;
-      } else if (this.key ==='ArrowDown'){
-        template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">&#8681;</span></button>`;
+      } else if (this.key ==='⇦'){
+        template += `<button class="virtual-keyboard__key control-key ArrowLeft"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
+      } else if (this.key ==='⇧'){
+        template += `<button class="virtual-keyboard__key control-key ArrowUp"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
+      } else if (this.key ==='⇨'){
+        template += `<button class="virtual-keyboard__key control-key ArrowRight"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
+      } else if (this.key ==='⇩'){
+        template += `<button class="virtual-keyboard__key control-key ArrowDown"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
       }
       else {
         template += `<button class="virtual-keyboard__key control-key ${this.key}"><span class="virtual-keyboard__text-key">${this.key}</span></button>`;
@@ -256,6 +256,7 @@ function pressShift(button) {
       });
     }
     button.classList.add("active");
+    button.classList.add("highlight");
   } else {
     if (!CAPSLOCK.classList.contains("active")) {
       lines.forEach((eOfLines, iOfLines) => {
@@ -316,8 +317,6 @@ function pressShift(button) {
 
 VIRTUAL_KEYBOARD.classList.add("virtual-keyboard");
 TEXT_AREA.classList.add("virtual-keyboard__text-area");
-TEXT_AREA.setAttribute("wrap", "hard");
-TEXT_AREA.setAttribute("cols", "30");
 document.body.append(TEXT_AREA);
 document.body.append(VIRTUAL_KEYBOARD);
 
@@ -394,7 +393,6 @@ VIRTUAL_KEYBOARD.addEventListener("click", (event) => {
       TEXT_AREA.selectionStart += widthRow;
     }
   }
-
   // нажатие стрелки влево
   if (ARROW_LEFT) {
     if (TEXT_AREA.value.length > 0) {
@@ -445,15 +443,9 @@ VIRTUAL_KEYBOARD.addEventListener("click", (event) => {
       TEXT_AREA.value.substring(END, TEXT_AREA.value.length);
     }
   }
-
   if (SHIFT_LEFT) SHIFT = SHIFT_LEFT;
   else SHIFT = SHIFT_RIGHT;
   if (SHIFT) {
-    if (!SHIFT.classList.contains("highlight")) {
-      SHIFT.classList.add("highlight");
-    } else {
-      SHIFT.classList.remove("highlight");
-    }
     pressShift(SHIFT);
   }
 });
