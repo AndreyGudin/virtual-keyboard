@@ -579,7 +579,7 @@ document.addEventListener('keydown', (event) => {
   }
   if (event.code === 'Tab') {
     event.preventDefault();
-    insertAtCursor('        ', TEXT_AREA);
+    insertAtCursor('\t', TEXT_AREA);
   }
   if (!(event.code === 'CapsLock') && !(event.code === 'ShiftLeft') && !(event.code === 'ShiftRight')) {
     highlightButton(event.code);
