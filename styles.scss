@@ -1,0 +1,128 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-size: 30px;
+}
+.virtual-keyboard__text-area {
+  width: 800px;
+  height: 300px;
+  box-sizing: border-box;
+  border: 10px solid chocolate;
+  border-radius: 10px;
+  background-color: aqua;
+}
+.virtual-keyboard {
+  display: flex;
+  flex-direction: column;
+  width: 950px;
+  gap: 5px;
+  border: 5px solid black;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px 5px;
+  border-radius: 10px;
+  background-color: cadetblue;
+}
+.virtual-keyboard__keyboard-line {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+
+  &.shift
+    > .virtual-keyboard__button-wrapper
+    > .virtual-keyboard__key
+    > .virtual-keyboard__symbol-key {
+    display: block;
+    transform: translate(-10px, 10px);
+    transition: all 0.3s ease 0s;
+  }
+}
+
+.virtual-keyboard__key,
+.virtual-keyboard__text-area {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 16px;
+}
+.virtual-keyboard__key {
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px 3px rgba(34, 60, 80, 0.7) inset;
+}
+
+.virtual-keyboard__key.control-key {
+  height: 50px;
+  min-width: 50px;
+}
+.virtual-keyboard__key.control-key.Space {
+  width: 400px;
+}
+
+.virtual-keyboard__key.control-key.Backspace {
+  width: 150px;
+}
+
+.virtual-keyboard__key.control-key.Enter,
+.virtual-keyboard__key.control-key.CapsLock {
+  width: 130px;
+}
+
+.virtual-keyboard__key.control-key.Tab {
+  width: 90px;
+}
+.virtual-keyboard__key.control-key.ShiftLeft {
+  width: 210px;
+}
+
+.virtual-keyboard__key.control-key.CtrlLeft,
+.virtual-keyboard__key.control-key.CtrlRight {
+  width: 75px;
+}
+
+.virtual-keyboard__key.text-key {
+  background-color: #f44f4f;
+}
+
+.virtual-keyboard__key.number-key {
+  background-color: #a4bf16;
+}
+
+.virtual-keyboard__key.control-key {
+  background-color: #476ad8;
+}
+
+.virtual-keyboard__key.text-key,
+.virtual-keyboard__key.number-key,
+.virtual-keyboard__key.control-key.ArrowLeft,
+.virtual-keyboard__key.control-key.ArrowRight,
+.virtual-keyboard__key.control-key.ArrowUp,
+.virtual-keyboard__key.control-key.ArrowDown {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+.virtual-keyboard__key.highlight {
+  transition: all 0.1s ease 0s;
+  background-color: bisque;
+  transform: scale(0.9);
+}
+.virtual-keyboard__key.active {
+  background-color: bisque;
+}
+
+.virtual-keyboard__symbol-key {
+  position: relative;
+  top: -10px;
+  left: 10px;
+}
+
+.virtual-keyboard__language-wrapper,
+.virtual-keyboard__curr-wrapper {
+  display: flex;
+}
+
+.virtual-keyboard__language-wrapper {
+  width: 950px;
+  justify-content: space-between;
+}
