@@ -397,6 +397,7 @@ KEYBOARD_EN.forEach((key) => {
   const divForKeyboardLine = document.createElement('div');
   divForKeyboardLine.classList.add('virtual-keyboard__keyboard-line');
   VIRTUAL_KEYBOARD.append(divForKeyboardLine);
+  
   if (Array.isArray(key)) {
     key.forEach((elemInKey) => {
       divForKeyboardLine.append(new KeyboardButton(elemInKey).generate());
