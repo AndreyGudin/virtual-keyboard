@@ -8,6 +8,10 @@ body {
 .virtual-keyboard__text-area {
   width: 800px;
   height: 300px;
+  box-sizing: border-box;
+  border: 10px solid chocolate;
+  border-radius: 10px;
+  background-color: aqua;
 }
 .virtual-keyboard {
   display: flex;
