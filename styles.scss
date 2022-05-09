@@ -111,4 +111,13 @@ body {
   left: 10px;
 }
 
+.virtual-keyboard__language-wrapper,.virtual-keyboard__curr-wrapper{
+  display: flex;
+}
+
+.virtual-keyboard__language-wrapper{
+  width: 950px;
+  justify-content: space-between;
+}
+
 

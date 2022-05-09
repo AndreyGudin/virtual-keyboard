@@ -14,7 +14,11 @@ const KEYBOARD_RU = [
 ];
 const VIRTUAL_KEYBOARD = document.createElement('div');
 const TEXT_AREA = document.createElement('textarea');
+const LANGUAGE_WRAPPER = document.createElement('div');
 const LANGUAGE_DIV = document.createElement('div');
+const LANGUAGE_CURR_WRAPPER = document.createElement('div');
+const LANGUAGE_COMB = document.createElement('div');
+const LANGUAGE_CURR = document.createElement('div');
 let currentLanguage = sessionStorage.getItem("currentLanguage");
 
 class KeyboardButton {
@@ -378,10 +382,20 @@ function switchToEnglish() {
 
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
 TEXT_AREA.classList.add('virtual-keyboard__text-area');
+LANGUAGE_WRAPPER.classList.add('virtual-keyboard__language-wrapper');
 LANGUAGE_DIV.classList.add('virtual-keyboard__language');
+LANGUAGE_COMB.classList.add('virtual-keyboard__language-comb');
+LANGUAGE_CURR.classList.add('virtual-keyboard__language-curr');
+LANGUAGE_CURR_WRAPPER.classList.add('virtual-keyboard__curr-wrapper');
 document.body.append(TEXT_AREA);
 document.body.append(VIRTUAL_KEYBOARD);
-document.body.append(LANGUAGE_DIV);
+document.body.append(LANGUAGE_WRAPPER);
+LANGUAGE_WRAPPER.append(LANGUAGE_COMB);
+LANGUAGE_WRAPPER.append(LANGUAGE_CURR_WRAPPER);
+LANGUAGE_CURR_WRAPPER.append(LANGUAGE_CURR);
+LANGUAGE_CURR_WRAPPER.append(LANGUAGE_DIV);
+LANGUAGE_COMB.innerText = "Переключить язык: SHIFT+ALT";
+LANGUAGE_CURR.innerText = "Текущий язык:"
 KEYBOARD_EN.forEach((key) => {
   const divForKeyboardLine = document.createElement('div');
   divForKeyboardLine.classList.add('virtual-keyboard__keyboard-line');
