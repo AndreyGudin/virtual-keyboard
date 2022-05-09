@@ -438,7 +438,7 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   }
   // нажатие кнопки Tab - создает отступ в 8 пробелов
   if (TAB) {
-    insertAtCursor('        ', TEXT_AREA);
+    insertAtCursor('\t', TEXT_AREA);
   }
   // нажатие CapsLock
   if (CAPSLOCK) {
