@@ -60,7 +60,7 @@ body {
   width: 400px;
 }
 
-.virtual-keyboard__key.control-key.BACKSPACE {
+.virtual-keyboard__key.control-key.Backspace {
   width: 150px;
 }
 
@@ -121,7 +121,8 @@ body {
   left: 10px;
 }
 
-.virtual-keyboard__language-wrapper, .virtual-keyboard__curr-wrapper {
+.virtual-keyboard__language-wrapper,
+.virtual-keyboard__curr-wrapper {
   display: flex;
 }
 

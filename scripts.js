@@ -1,12 +1,12 @@
 const KEYBOARD_EN = [
-  [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
+  [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'Backspace'],
   ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', ['[', '{'], [']', '}'], ['\\', '|'], 'Del'],
   ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', [';', ':'], ["'", '"'], 'Enter'],
   ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', [',', '<'], ['.', '>'], ['/', '?'], '⇧', 'Shift'],
   ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', '⇦', '⇩', '⇨'],
 ];
 const KEYBOARD_RU = [
-  [['ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'BACKSPACE'],
+  [['ё', ''], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'Backspace'],
   ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', ['х', ''], ['ъ', ''], ['\\', '/'], 'Del'],
   ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', ['ж', ''], ['э', ''], 'Enter'],
   ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', ['б', ''], ['ю', ''], ['.', ','], '⇧', 'Shift'],
@@ -19,12 +19,11 @@ const LANGUAGE_DIV = document.createElement('div');
 const LANGUAGE_CURR_WRAPPER = document.createElement('div');
 const LANGUAGE_COMB = document.createElement('div');
 const LANGUAGE_CURR = document.createElement('div');
-let currentLanguage = sessionStorage.getItem("currentLanguage");
+let currentLanguage = sessionStorage.getItem('currentLanguage');
 
 class KeyboardButton {
-  constructor(key, lang) {
+  constructor(key = 'KeyA') {
     this.key = key;
-    this.lang = lang;
   }
 
   generate() {
@@ -95,7 +94,7 @@ class KeyboardButton {
   }
 }
 
-function insertAtCursor(text, textarea) {
+function insertAtCursor(text = 'Hello Student!', textarea = TEXT_AREA) {
   const target = textarea;
   const startPos = target.selectionStart;
   const endPos = target.selectionEnd;
@@ -111,13 +110,13 @@ function insertAtCursor(text, textarea) {
   }
 }
 
-function highlightButton(key, param = 'highlight') {
+function highlightButton(key = 'KeyQ', param = 'highlight') {
   let buttonLighted;
   if (key === 'ControlLeft' || key === 'ControlRight') {
     buttonLighted = document.querySelector(
       `.virtual-keyboard__key.Ctrl${key.substring(7)}`,
     );
-    if (!buttonLighted.classList.contains('highlight')&&!(param === 'uncheck')) {
+    if (!buttonLighted.classList.contains('highlight') && !(param === 'uncheck')) {
       buttonLighted.classList.add('highlight');
     } else if (param === 'uncheck') {
       buttonLighted.classList.remove('highlight');
@@ -146,7 +145,7 @@ function highlightButton(key, param = 'highlight') {
   }
 }
 
-function pressCapsLock(button) {
+function pressCapsLock(button = document.querySelector('.control-key.CapsLock')) {
   const SHIFT_LEFT = document.querySelector('.control-key.ShiftLeft');
   const SHIFT_RIGHT = document.querySelector('.control-key.ShiftRight');
   const PressedShift = (SHIFT_LEFT.classList.contains('active')) || (SHIFT_RIGHT.classList.contains('active'));
@@ -191,7 +190,7 @@ function pressCapsLock(button) {
   }
 }
 
-function pressShift(button) {
+function pressShift(button = document.querySelector('.control-key.ShiftLeft')) {
   const CAPSLOCK = document.querySelector('.control-key.CapsLock');
   const Q = document.querySelector('.text-key.KeyQ');
   const isEnglish = Q.innerText.toLowerCase() === 'q';
@@ -318,10 +317,10 @@ function switchToRussian() {
       const index = iOfSpans;
       if (Array.isArray(KEYBOARD_RU[iOfLines][index])) {
         if (KEYBOARD_RU[iOfLines][index][1]) {
-          [,span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][index];
+          [, span.nextSibling.innerText] = KEYBOARD_RU[iOfLines][index];
         } else {
-          [span.innerText,] = KEYBOARD_RU[iOfLines][index];
-          span.nextSibling.innerText = "";
+          [span.innerText] = KEYBOARD_RU[iOfLines][index];
+          span.nextSibling.innerText = '';
           if (isCapslockActive) {
             span.innerText = span.innerText.toUpperCase();
           } else {
@@ -338,10 +337,9 @@ function switchToRussian() {
       }
     });
   });
-  currentLanguage = "RU";
+  currentLanguage = 'RU';
   LANGUAGE_DIV.innerText = currentLanguage;
-  sessionStorage.setItem("currentLanguage",currentLanguage);
-
+  sessionStorage.setItem('currentLanguage', currentLanguage);
 }
 
 function switchToEnglish() {
@@ -374,11 +372,10 @@ function switchToEnglish() {
       }
     });
   });
-  currentLanguage = "EN";
+  currentLanguage = 'EN';
   LANGUAGE_DIV.innerText = currentLanguage;
-  sessionStorage.setItem("currentLanguage",currentLanguage);
+  sessionStorage.setItem('currentLanguage', currentLanguage);
 }
-
 
 VIRTUAL_KEYBOARD.classList.add('virtual-keyboard');
 TEXT_AREA.classList.add('virtual-keyboard__text-area');
@@ -394,8 +391,8 @@ LANGUAGE_WRAPPER.append(LANGUAGE_COMB);
 LANGUAGE_WRAPPER.append(LANGUAGE_CURR_WRAPPER);
 LANGUAGE_CURR_WRAPPER.append(LANGUAGE_CURR);
 LANGUAGE_CURR_WRAPPER.append(LANGUAGE_DIV);
-LANGUAGE_COMB.innerText = "Переключить язык: SHIFT+ALT";
-LANGUAGE_CURR.innerText = "Текущий язык:"
+LANGUAGE_COMB.innerText = 'Переключить язык: SHIFT+ALT';
+LANGUAGE_CURR.innerText = 'Текущий язык:';
 KEYBOARD_EN.forEach((key) => {
   const divForKeyboardLine = document.createElement('div');
   divForKeyboardLine.classList.add('virtual-keyboard__keyboard-line');
@@ -410,18 +407,17 @@ KEYBOARD_EN.forEach((key) => {
   LANGUAGE_DIV.innerText = currentLanguage;
 });
 
-if (currentLanguage === "RU"){
+if (currentLanguage === 'RU') {
   switchToRussian();
 }
 
 TEXT_AREA.focus();
 
-
 VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   const CAPSLOCK = event.target.closest('.control-key.CapsLock');
   const WHITE_SPACE = event.target.closest('.control-key.Space');
   const ENTER = event.target.closest('.control-key.Enter');
-  const BACK_SPACE = event.target.closest('.control-key.BACKSPACE');
+  const BACK_SPACE = event.target.closest('.control-key.Backspace');
   const DELETE = event.target.closest('.control-key.Del');
   const ARROW_UP = event.target.closest('.control-key.ArrowUp');
   const ARROW_DOWN = event.target.closest('.control-key.ArrowDown');
@@ -495,7 +491,6 @@ VIRTUAL_KEYBOARD.addEventListener('click', (event) => {
   }
   // нажатие BackSpace
   if (BACK_SPACE) {
-    console.log(TEXT_AREA.selectionStart, TEXT_AREA.selectionEnd);
     const START = TEXT_AREA.selectionStart;
     const END = TEXT_AREA.selectionEnd;
     TEXT_AREA.focus();
@@ -545,10 +540,10 @@ VIRTUAL_KEYBOARD.addEventListener('mousedown', (event) => {
   }
 });
 
-VIRTUAL_KEYBOARD.addEventListener('mouseup', (event) => {
-  const HIGHLIGHTED = document.querySelector(".highlight");
-  if (HIGHLIGHTED){
-    HIGHLIGHTED.classList.remove("highlight");
+VIRTUAL_KEYBOARD.addEventListener('mouseup', () => {
+  const HIGHLIGHTED = document.querySelector('.highlight');
+  if (HIGHLIGHTED) {
+    HIGHLIGHTED.classList.remove('highlight');
   }
 });
 
@@ -567,7 +562,7 @@ document.addEventListener('keydown', (event) => {
       if (isEnglish) {
         switchToRussian();
       } else {
-          switchToEnglish();
+        switchToEnglish();
       }
     }
   } else {
@@ -592,7 +587,6 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keyup', (event) => {
-  console.log(event.code);
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     isShiftPressed = true;
     pressShift(document.querySelector(`.control-key.${event.code}`));
